@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: baseball
+    database: baseball
+    schema: raw
+    tables:
+      - name: players
+      - name: team_season_offense
+      - name: player_career_offense
+      - name: player_season_league_offense
