@@ -2,5 +2,6 @@
 
 --TODO: cast data types
 
-SELECT *
+SELECT 
+*
 FROM {{ source('baseball', 'player_season_league_offense') }}
