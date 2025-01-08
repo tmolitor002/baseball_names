@@ -102,6 +102,7 @@ WITH player_stats AS (
 , final AS (
     SELECT 
         player_id
+        , plate_appearances
         , season as "Season"
         , (
             (
