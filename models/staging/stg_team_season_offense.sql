@@ -228,5 +228,4 @@ SELECT
     , CAST(pitched_called_strike_rate                       AS FLOAT) AS pitched_called_strike_rate
     , CAST(pitch_data_coverage_rate                         AS FLOAT) AS pitch_data_coverage_rate
 
-
 FROM {{ source('baseball', 'team_season_offense') }}
