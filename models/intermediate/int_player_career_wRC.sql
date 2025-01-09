@@ -15,8 +15,6 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player career stats                                 |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/9/2025  | Tom Molitor   | Renamed wRC and wOBA to clarify they are season weighted                                      |
-+-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
 - Confirm this is the right way to calc career wRC and wOBA

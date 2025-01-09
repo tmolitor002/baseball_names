@@ -16,6 +16,8 @@ Description: Staging table to bring in raw players for futher analysis
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/7/2025  | Tom Molitor   | Cast fields as appropriate data type. Reorganized some fields for better readability          |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
+| 1/9/2025  | Tom Molitor   | Replaced '\N' for player_id and baseball_reference_id fields with person_id                   |
++-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
 -Better birth_date parsing
@@ -24,8 +26,14 @@ TODO:
 
 SELECT 
     person_id
-    , player_id
-    , baseball_reference_player_id
+    , CASE
+        WHEN player_id = '\N' THEN person_id
+        ELSE player_id
+        END AS player_id
+    CASE
+        WHEN baseball_reference_player_id = '\N' THEN person_id
+        ELSE baseball_reference_player_id
+        END AS baseball_reference_player_id
     , first_name
     , last_name
     , official_name
