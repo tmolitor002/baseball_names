@@ -6,7 +6,48 @@ sources:
     schema: raw
     tables:
       - name: players
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
+        
       - name: team_season_offense
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
       - name: player_career_offense
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
       - name: player_season_league_offense
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
       - name: season_constants
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
