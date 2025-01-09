@@ -1,6 +1,6 @@
 # File:           Baseball Sources
 # Author:         Tom Molitor
-# Created:        1/9/2025
+# Created:        1/7/2025
 # Last Modified:  1/9/2025
 #
 # Description: Project file defining source data for models
@@ -10,7 +10,9 @@
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
 # | Date      | Author        | Description                                                                                   |
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
-# | 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player stats                                        |
+# | 1/7/2025  | Tom Molitor   | Initialized file and added initial data sources                                               |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/9/2025  | Tom Molitor   | Added data freshness detail to sources                                                        |
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
 #
 # TODO:
