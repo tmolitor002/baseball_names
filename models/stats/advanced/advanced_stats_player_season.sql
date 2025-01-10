@@ -20,10 +20,29 @@ TODO:
 
 
 */
-
-SELECT 
-    player_id
+WITH wRC AS (
+    SELECT player_id
     , "Season"
-    , "wRC"
-    , "wOBA"
-FROM {{ ref("int_player_season_wRC") }}
+    , 'wRC' AS "Metric"
+    , "wRC" AS "Value"
+    FROM {{ ref('int_player_season_wRC') }}
+)
+
+, wOBA AS (
+    SELECT player_id
+    , "Season"
+    , 'wOBA' AS "Metric"
+    , "wOBA" AS "Value"
+    FROM {{ ref('int_player_season_wOBA') }}
+)
+
+, final AS (
+    SELECT *
+    FROM wRC
+    UNION
+    SELECT *
+    FROM wOBA
+)
+
+SELECT *
+FROM final
