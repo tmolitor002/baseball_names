@@ -26,7 +26,12 @@ sources:
     schema: raw
     tables:
       - name: players
-        loaded_at_field: _loaded
+        columns:
+          - name: person_id
+            tests:
+              - unique
+              - not_null    
+        loaded_at_field: _loaded           
         freshness: 
           error_after:
             count: 365
@@ -36,6 +41,13 @@ sources:
             period: day
 
       - name: team_season_offense
+        columns:
+          - name: team_id
+            tests:
+              - not_null
+          - name: season
+            tests:
+              - not_null
         loaded_at_field: _loaded
         freshness: 
           error_after:
@@ -45,6 +57,10 @@ sources:
             count: 270
             period: day
       - name: player_career_offense
+        columns:
+          - name: player_id
+            tests:
+              - not_null
         loaded_at_field: _loaded
         freshness: 
           error_after:
@@ -54,6 +70,13 @@ sources:
             count: 270
             period: day
       - name: player_season_league_offense
+        columns:
+          - name: player_id
+            tests:
+              - not_null
+          - name: season
+            tests:
+              - not_null
         loaded_at_field: _loaded
         freshness: 
           error_after:
