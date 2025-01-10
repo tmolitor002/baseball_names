@@ -1,11 +1,11 @@
 /*
 
-Model:          int_player_season_wRC
+Model:          int_player_season_wOBA
 Author:         Tom Molitor
-Created:        1/7/2025
-Last Modified:  1/7/2025
+Created:        1/9/2025
+Last Modified:  1/9/2025
 
-Description: Staging table to create player wRC tables
+Description: Staging table to create player wOBA table
 Source: https://www.fangraphs.com/guts.aspx?type=cn
 
 +---------------------------------------------------------------------------------------------------------------------------+
@@ -13,10 +13,7 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | Date      | Author        | Description                                                                                   |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player stats                                        |
-+-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/9/2025  | Tom Molitor   | Broke down query into smaller models, saved in intermediate/wRC_steps.                        |
-|           |               | Moved wOBA to separate model: int_player_season_wOBA                                          |
+| 1/9/2025  | Tom Molitor   | Initalized model and created wOBA player stats                                                |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
@@ -27,19 +24,11 @@ TODO:
 WITH final AS (
     SELECT 
         player_id
-        --, plate_appearances
         , season as "Season"
-        , (
-            (
-                (
-                    (woba - league_woba) / league_woba_scale
-                ) + league_rpa
-            ) * plate_appearances
-        ) AS "wRC"
-        --, woba AS "wOBA"
+        , woba AS "wOBA"
     FROM {{ ref("int_wOBA_stats_calc_1") }}
 )
 
 SELECT *
 FROM final
-ORDER BY "wRC" DESC
+ORDER BY "wOBA" DESC
