@@ -23,14 +23,14 @@ TODO:
 WITH wRC AS (
     SELECT player_id
     , 'wRC' AS metric
-    , "wRC" AS value
+    , career_wRC_season_weighted AS value
     FROM {{ ref('int_player_career_wRC') }}
 )
 
 , wOBA AS (
     SELECT player_id
     , 'wOBA' AS metric
-    , "wOBA" AS value
+    , career_wOBA_season_weighted AS value
     FROM {{ ref('int_player_career_wOBA') }}
 )
 

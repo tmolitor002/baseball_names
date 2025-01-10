@@ -25,7 +25,6 @@ WITH final AS(
     SELECT
 
         player_id
-        , SUM(plate_appearances)                    AS career_plate_appearances
         , COUNT("Season")                           AS seasons
         , (SUM("wOBA") / COUNT("Season"))           AS career_wOBA_season_weighted
 
