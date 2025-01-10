@@ -30,7 +30,7 @@ SELECT
         WHEN player_id = '\N' THEN person_id
         ELSE player_id
         END AS player_id
-    CASE
+    , CASE
         WHEN baseball_reference_player_id = '\N' THEN person_id
         ELSE baseball_reference_player_id
         END AS baseball_reference_player_id

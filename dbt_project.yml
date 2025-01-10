@@ -37,6 +37,6 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   baseball_names:
-    # Applies to all files under models/example/
+    # Applies to all files under models/advanced/
     advanced:
       +materialized: table

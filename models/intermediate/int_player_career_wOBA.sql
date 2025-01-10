@@ -1,6 +1,6 @@
 /*
 
-Model:          int_player_career_wRC
+Model:          int_player_career_wOBA
 Author:         Tom Molitor
 Created:        1/7/2025
 Last Modified:  1/7/2025
@@ -13,11 +13,11 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | Date      | Author        | Description                                                                                   |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player career stats                                 |
+| 1/9/2025  | Tom Molitor   | Initalized model and created wOBA player career stats                                 |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
-- Confirm this is the right way to calc career wRC and wOBA
+- Confirm this is the right way to calc career wOBA
 
 */
 
@@ -25,13 +25,14 @@ WITH final AS(
     SELECT
 
         player_id
+        , SUM(plate_appearances)                    AS career_plate_appearances
         , COUNT("Season")                           AS seasons
-        , (SUM("wRC") / COUNT("Season"))            AS career_wRC_season_weighted
+        , (SUM("wOBA") / COUNT("Season"))           AS career_wOBA_season_weighted
 
-    FROM {{ ref("int_player_season_wRC") }}
+    FROM {{ ref("int_player_season_wOBA") }}
     GROUP BY player_id
 )
 
 SELECT *
 FROM final
-ORDER BY career_wRC_season_weighted DESC
+ORDER BY career_wOBA_season_weighted DESC
