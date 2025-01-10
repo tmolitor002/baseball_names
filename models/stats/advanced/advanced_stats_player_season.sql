@@ -15,11 +15,16 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/7/2025  | Tom Molitor   | Initalized model and imported wRC and wOBA player stats                                       |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
+| 1/9/2025  | Tom Molitor   | Pivoted data to be vertical. Set model to be materialized as a table                          |
++-----------+---------------+-----------------------------------------------------------------------------------------------+
+
 
 TODO:
 
 
 */
+
+
 WITH wRC AS (
     SELECT player_id
     , "Season" AS season
