@@ -22,7 +22,7 @@ TODO:
 */
 
 SELECT 
-
+    
     player_id
     , CAST(plate_appearances                				AS INT) AS plate_appearances
     , CAST(at_bats                          				AS INT) AS at_bats

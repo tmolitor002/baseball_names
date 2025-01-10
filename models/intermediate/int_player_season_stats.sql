@@ -1,37 +1,41 @@
 /*
 
-Model:          int_player_career_wRC
+Model:          int_player_season_stats
 Author:         Tom Molitor
-Created:        1/7/2025
-Last Modified:  1/7/2025
+Created:        1/9/2025
+Last Modified:  1/9/2025
 
-Description: Staging table to create player wRC tables
-Source: https://www.fangraphs.com/guts.aspx?type=cn
+Description: Staging table to create player stats by season
+
 
 +---------------------------------------------------------------------------------------------------------------------------+
 | Change History                                                                                                            |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | Date      | Author        | Description                                                                                   |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player career stats                                 |
+| 1/9/2025  | Tom Molitor   | Initalized model to create basic stats for players by season                                  |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
-- Confirm this is the right way to calc career wRC and wOBA
-
 */
 
-WITH final AS(
-    SELECT
+-- Get applicable season stats for each player
+SELECT
 
-        player_id
-        , COUNT("Season")                           AS seasons
-        , (SUM("wRC") / COUNT("Season"))            AS career_wRC_season_weighted
+    player_id
+    , season
+    , plate_appearances
+    , at_bats
+    , singles
+    , doubles
+    , triples
+    , home_runs
+    , walks -- includes intentional
+    , intentional_walks
+    , walks - intentional_walks AS unintentional_walks
+    , hit_by_pitches
+    , sacrifice_flies
 
-    FROM {{ ref("int_player_season_wRC") }}
-    GROUP BY player_id
-)
 
-SELECT *
-FROM final
-ORDER BY career_wRC_season_weighted DESC
+FROM {{ ref("stg_player_season_league_offense") }}
+-- Can only calculate for seasons where constants are available

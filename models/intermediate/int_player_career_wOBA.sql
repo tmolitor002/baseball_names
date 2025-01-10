@@ -1,6 +1,6 @@
 /*
 
-Model:          int_player_season_wRC
+Model:          int_player_career_wOBA
 Author:         Tom Molitor
 Created:        1/7/2025
 Last Modified:  1/7/2025
@@ -13,33 +13,25 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | Date      | Author        | Description                                                                                   |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player stats                                        |
-+-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/9/2025  | Tom Molitor   | Broke down query into smaller models, saved in intermediate/wRC_steps.                        |
-|           |               | Moved wOBA to separate model: int_player_season_wOBA                                          |
+| 1/9/2025  | Tom Molitor   | Initalized model and created wOBA player career stats                                 |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
+- Confirm this is the right way to calc career wOBA
 
 */
 
--- Get applicable season stats for each player
-WITH final AS (
-    SELECT 
+WITH final AS(
+    SELECT
+
         player_id
-        --, plate_appearances
-        , season as "Season"
-        , (
-            (
-                (
-                    (woba - league_woba) / league_woba_scale
-                ) + league_rpa
-            ) * plate_appearances
-        ) AS "wRC"
-        --, woba AS "wOBA"
-    FROM {{ ref("int_wOBA_stats_calc_1") }}
+        , COUNT("Season")                           AS seasons
+        , (SUM("wOBA") / COUNT("Season"))           AS career_wOBA_season_weighted
+
+    FROM {{ ref("int_player_season_wOBA") }}
+    GROUP BY player_id
 )
 
 SELECT *
 FROM final
-ORDER BY "wRC" DESC
+ORDER BY career_wOBA_season_weighted DESC

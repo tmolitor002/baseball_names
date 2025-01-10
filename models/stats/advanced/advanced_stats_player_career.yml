@@ -1,0 +1,33 @@
+# File:           advanced_stats_player_season.yml
+# Author:         Tom Molitor
+# Created:        1/9/2025
+# Last Modified:  1/9/2025
+#
+# Description: Tests
+#
+# +---------------------------------------------------------------------------------------------------------------------------+
+# | Change History                                                                                                            |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | Date      | Author        | Description                                                                                   |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/9/2025  | Tom Molitor   | Initialized file and added initial tests                                                      |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+#
+# TODO:
+
+version: 2
+
+models:
+  - name: advanced_stats_player_career
+    columns:
+      - name: player_id
+        tests:
+          - not_null
+      - name: metric
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['wRC', 'wOBA']
+      - name: value
+        tests:
+          - not_null

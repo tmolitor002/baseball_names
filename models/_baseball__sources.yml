@@ -1,3 +1,23 @@
+# File:           Baseball Sources
+# Author:         Tom Molitor
+# Created:        1/7/2025
+# Last Modified:  1/9/2025
+#
+# Description: Project file defining source data for models
+#
+# +---------------------------------------------------------------------------------------------------------------------------+
+# | Change History                                                                                                            |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | Date      | Author        | Description                                                                                   |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/7/2025  | Tom Molitor   | Initialized file and added initial data sources                                               |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/9/2025  | Tom Molitor   | Added data freshness detail to sources                                                        |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+#
+# TODO:
+
+
 version: 2
 
 sources:
@@ -6,7 +26,71 @@ sources:
     schema: raw
     tables:
       - name: players
+        columns:
+          - name: person_id
+            tests:
+              - unique
+              - not_null    
+        loaded_at_field: _loaded           
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
+
       - name: team_season_offense
+        columns:
+          - name: team_id
+            tests:
+              - not_null
+          - name: season
+            tests:
+              - not_null
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
       - name: player_career_offense
+        columns:
+          - name: player_id
+            tests:
+              - not_null
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
       - name: player_season_league_offense
+        columns:
+          - name: player_id
+            tests:
+              - not_null
+          - name: season
+            tests:
+              - not_null
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day
       - name: season_constants
+        loaded_at_field: _loaded
+        freshness: 
+          error_after:
+            count: 365
+            period: day
+          warn_after:
+            count: 270
+            period: day

@@ -1,37 +1,41 @@
 /*
 
-Model:          int_player_career_wRC
+Model:          int_wOBA_stats_calc_1
 Author:         Tom Molitor
-Created:        1/7/2025
-Last Modified:  1/7/2025
+Created:        1/9/2025
+Last Modified:  1/9/2025
 
-Description: Staging table to create player wRC tables
-Source: https://www.fangraphs.com/guts.aspx?type=cn
+Description: Intermediate table to calculate wOBA by season and player
+
 
 +---------------------------------------------------------------------------------------------------------------------------+
 | Change History                                                                                                            |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | Date      | Author        | Description                                                                                   |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/7/2025  | Tom Molitor   | Initalized model and created wRC and wOBA player career stats                                 |
+| 1/9/2025  | Tom Molitor   | Initalized model to calculate wOBA by players and season                                       |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
-- Confirm this is the right way to calc career wRC and wOBA
-
 */
 
-WITH final AS(
-    SELECT
-
+-- Calculate stats by player
+SELECT 
         player_id
-        , COUNT("Season")                           AS seasons
-        , (SUM("wRC") / COUNT("Season"))            AS career_wRC_season_weighted
-
-    FROM {{ ref("int_player_season_wRC") }}
-    GROUP BY player_id
-)
-
-SELECT *
-FROM final
-ORDER BY career_wRC_season_weighted DESC
+        , season
+        , plate_appearances
+        , (
+            ( -- create numerator
+                woba_unintentional_bb
+                + woba_hbp
+                + woba_w1b
+                + woba_w2b
+                + woba_w3b
+                + woba_hr
+            ) / woba_denominator
+        ) AS woba
+        , league_woba
+        , league_woba_scale
+        , league_rpa
+    FROM {{ ref("int_wRC_stats_calc_1") }}
+    WHERE woba_denominator != 0 -- don't qualify
