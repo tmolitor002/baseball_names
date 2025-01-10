@@ -22,17 +22,17 @@ TODO:
 */
 WITH wRC AS (
     SELECT player_id
-    , "Season"
-    , 'wRC' AS "Metric"
-    , "wRC" AS "Value"
+    , "Season" AS season
+    , 'wRC' AS metric
+    , "wRC" AS value
     FROM {{ ref('int_player_season_wRC') }}
 )
 
 , wOBA AS (
     SELECT player_id
-    , "Season"
-    , 'wOBA' AS "Metric"
-    , "wOBA" AS "Value"
+    , "Season" AS season
+    , 'wOBA' AS metric
+    , "wOBA" AS value
     FROM {{ ref('int_player_season_wOBA') }}
 )
 
