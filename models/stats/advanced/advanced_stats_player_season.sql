@@ -17,7 +17,7 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/9/2025  | Tom Molitor   | Pivoted data to be vertical. Set model to be materialized as a table                          |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-| 1/10/2025 | Tom Molitor   | Added babip to advanced stats                                                                 |
+| 1/10/2025 | Tom Molitor   | Added babip and iso to advanced stats                                                                 |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
@@ -45,9 +45,20 @@ WITH wRC AS (
 , babip AS (
     SELECT player_id
     , season
-    , 'babip' AS metric
+    , 'BABIP' AS metric
     , babip AS value
     FROM {{ ref('int_player_season_babip') }}
+)
+
+, iso AS (
+    SELECT
+        player_id
+        , season
+        , 'ISO' AS metric
+        , isolated_power AS value
+    FROM {{ ref('stg_player_season_league_offense') }}
+    WHERE plate_appearances > 0
+    AND isolated_power IS NOT NULL
 )
 
 , final AS (
@@ -59,6 +70,8 @@ WITH wRC AS (
     UNION
     SELECT *
     FROM babip
+    UNION SELECT *
+    FROM iso
 )
 
 SELECT *
