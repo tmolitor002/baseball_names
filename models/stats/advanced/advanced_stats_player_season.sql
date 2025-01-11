@@ -17,10 +17,11 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/9/2025  | Tom Molitor   | Pivoted data to be vertical. Set model to be materialized as a table                          |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
-
+| 1/10/2025 | Tom Molitor   | Added babip to advanced stats                                                                 |
++-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
-
+- Add additional advanced stats
 
 */
 
@@ -41,12 +42,23 @@ WITH wRC AS (
     FROM {{ ref('int_player_season_wOBA') }}
 )
 
+, babip AS (
+    SELECT player_id
+    , season
+    , 'babip' AS metric
+    , babip AS value
+    FROM {{ ref('int_player_season_babip') }}
+)
+
 , final AS (
     SELECT *
     FROM wRC
     UNION
     SELECT *
     FROM wOBA
+    UNION
+    SELECT *
+    FROM babip
 )
 
 SELECT *

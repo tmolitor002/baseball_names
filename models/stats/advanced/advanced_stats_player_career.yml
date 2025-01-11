@@ -24,7 +24,7 @@ models:
         tests:
           - not_null
       - name: metric
-        description: "{{ doc('metric')}}"
+        description: "{{ doc('metric') }}"
         tests:
           - not_null
           - accepted_values:

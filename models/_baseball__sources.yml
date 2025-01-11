@@ -26,8 +26,10 @@ sources:
     schema: raw
     tables:
       - name: players
+        description: One record per player. May additionally included coaches, umpires, and scorers.
         columns:
           - name: person_id
+            description: PK
             tests:
               - unique
               - not_null    
@@ -41,6 +43,7 @@ sources:
             period: day
 
       - name: team_season_offense
+        description: One record per team and season.
         columns:
           - name: team_id
             tests:
@@ -57,6 +60,7 @@ sources:
             count: 270
             period: day
       - name: player_career_offense
+        description: One record per player. Consolidation of career stats.
         columns:
           - name: player_id
             tests:
@@ -70,6 +74,7 @@ sources:
             count: 270
             period: day
       - name: player_season_league_offense
+        description: One record per player per season. Required for calculation of some advanced stats when season-level constants are required.
         columns:
           - name: player_id
             tests:
@@ -86,6 +91,13 @@ sources:
             count: 270
             period: day
       - name: season_constants
+        description: One record per season. Contains season level constants used for the calculation of advanced stats.
+        columns:
+            - name: season
+              description: PK
+              tests:
+                - not_null
+                - unique
         loaded_at_field: _loaded
         freshness: 
           error_after:
