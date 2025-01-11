@@ -15,6 +15,8 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/9/2025  | Tom Molitor   | Initalized model and imported wRC and wOBA player stats                                       |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
+| 1/10/2025 | Tom Molitor   | Added babip                                                                                   |
++-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
 
@@ -33,6 +35,12 @@ WITH wRC AS (
     , career_wOBA_season_weighted AS value
     FROM {{ ref('int_player_career_wOBA') }}
 )
+, babip AS (
+    SELECT player_id
+        , 'babip' AS metric
+        , babip AS value
+    FROM {{ ref('int_player_career_babip') }}
+)
 
 , final AS (
     SELECT *
@@ -40,6 +48,9 @@ WITH wRC AS (
     UNION
     SELECT *
     FROM wOBA
+    UNION
+    SELECT *
+    FROM babip
 )
 
 SELECT *

@@ -28,7 +28,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['wRC', 'wOBA']
+              values: ['wRC', 'wOBA', 'babip']
       - name: value
         tests:
           - not_null
