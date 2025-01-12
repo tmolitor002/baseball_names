@@ -19,7 +19,7 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
-
+- Add On-base Plus Slugging (OPS+): https://www.mlb.com/glossary/advanced-stats/on-base-plus-slugging-plus
 */
 
 WITH wRC AS (
@@ -67,3 +67,6 @@ WITH wRC AS (
 
 SELECT *
 FROM final
+
+SELECT *
+FROM {{ ref('stg_season_constants') }}
