@@ -51,6 +51,13 @@ WITH wRC AS (
     AND isolated_power IS NOT NULL
 )
 
+, ops_plus AS (
+    SELECT player_id
+    , 'OPS Plus' AS metric
+    , ops_plus AS value
+    FROM {{ ref('int_player_career_ops_plus') }}
+)
+
 , final AS (
     SELECT *
     FROM wRC
@@ -63,10 +70,10 @@ WITH wRC AS (
     UNION
     SELECT *
     FROM iso
+    UNION
+    SELECT *
+    FROM ops_plus
 )
 
 SELECT *
 FROM final
-
-SELECT *
-FROM {{ ref('stg_season_constants') }}
