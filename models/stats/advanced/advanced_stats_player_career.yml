@@ -12,6 +12,8 @@
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
 # | 1/9/2025  | Tom Molitor   | Initialized file and added initial tests                                                      |
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/11/2025 | Tom Molitor   | Added player career OPS+                                                                      |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
 #
 # TODO:
 
@@ -24,10 +26,11 @@ models:
         tests:
           - not_null
       - name: metric
+        description: "{{ doc('metric') }}"
         tests:
           - not_null
           - accepted_values:
-              values: ['wRC', 'wOBA']
+              values: ['wRC', 'wOBA', 'BABIP', 'ISO', 'OPS Plus']
       - name: value
         tests:
           - not_null

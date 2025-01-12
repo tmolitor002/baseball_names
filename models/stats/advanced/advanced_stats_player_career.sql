@@ -15,9 +15,11 @@ Source: https://www.fangraphs.com/guts.aspx?type=cn
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
 | 1/9/2025  | Tom Molitor   | Initalized model and imported wRC and wOBA player stats                                       |
 +-----------+---------------+-----------------------------------------------------------------------------------------------+
+| 1/10/2025 | Tom Molitor   | Added babip and iso                                                                           |
++-----------+---------------+-----------------------------------------------------------------------------------------------+
 
 TODO:
-
+- Add On-base Plus Slugging (OPS+): https://www.mlb.com/glossary/advanced-stats/on-base-plus-slugging-plus
 */
 
 WITH wRC AS (
@@ -33,6 +35,28 @@ WITH wRC AS (
     , career_wOBA_season_weighted AS value
     FROM {{ ref('int_player_career_wOBA') }}
 )
+, babip AS (
+    SELECT player_id
+        , 'BABIP' AS metric
+        , babip AS value
+    FROM {{ ref('int_player_career_babip') }}
+)
+
+, iso AS (
+    SELECT player_id
+        , 'ISO' AS metric
+        , isolated_power AS value
+    FROM {{ ref('stg_player_career_offense') }}
+    WHERE plate_appearances > 0
+    AND isolated_power IS NOT NULL
+)
+
+, ops_plus AS (
+    SELECT player_id
+    , 'OPS Plus' AS metric
+    , ops_plus AS value
+    FROM {{ ref('int_player_career_ops_plus') }}
+)
 
 , final AS (
     SELECT *
@@ -40,6 +64,15 @@ WITH wRC AS (
     UNION
     SELECT *
     FROM wOBA
+    UNION
+    SELECT *
+    FROM babip
+    UNION
+    SELECT *
+    FROM iso
+    UNION
+    SELECT *
+    FROM ops_plus
 )
 
 SELECT *

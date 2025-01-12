@@ -12,8 +12,13 @@
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
 # | 1/9/2025  | Tom Molitor   | Initialized file and added initial tests                                                      |
 # +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/10/2025 | Tom Molitor   | Added babip and iso to advanced stats                                                         |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
+# | 1/11/2025 | Tom Molitor   | Added OPS+ to advanced stats                                                                  |
+# +-----------+---------------+-----------------------------------------------------------------------------------------------+
 #
 # TODO:
+# - Add additional advanced stats
 
 version: 2
 
@@ -27,10 +32,11 @@ models:
         tests:
           - not_null
       - name: metric
+        description: "{{ doc('metric')}}"      
         tests:
           - not_null
           - accepted_values:
-              values: ['wRC', 'wOBA']
+              values: ['wRC', 'wOBA', 'BABIP', 'ISO', 'OPS Plus']
       - name: value
         tests:
           - not_null
